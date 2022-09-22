@@ -3,7 +3,7 @@ import "./ProductList.css";
 import store from "../../store";
 import { observer } from "mobx-react";
 import SearchBarComponent from "../../assets/searchBarComponent/SerachBarComponent";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 const filterProducts = (products: any, query: any) => {
   if (!query) {
     return products;
@@ -16,11 +16,14 @@ const filterProducts = (products: any, query: any) => {
 };
 
 const ProductsList = () => {
-  const { search } = window.location;
-  const query = new URLSearchParams(search).get("s");
-  const [searchQuery, setSearchQuery] = useState<any>(query || "");
+  const [searchQuery, setSearchQuery] = useState<any>("");
   const products = store.products;
   const filteredProducts = filterProducts(products, searchQuery);
+  let productsWithPaginations = filteredProducts.slice(
+    store.paginationStartPoint,
+    store.paginationStartPoint + 4
+  );
+
   return (
     <div className="product-list-container">
       <div className="control-buttons-container">
@@ -33,33 +36,43 @@ const ProductsList = () => {
         />
       </div>
       <ul className="ul-container">
-        {filteredProducts.map((product: Product) => (
-          <li
-            key={product.id}
-            onClick={() => {
-              store.setSelectedProduct(product.id);
-            }}
-            className="li-container"
-            style={{
-              backgroundColor:
-                store.productToDisplay?.id == product.id ? "skyblue" : "white",
-            }}
-          >
-            <img src={product.thumbnail} alt="Logo" className="product-image" />
-            <div className="title-and-description">
-              <div className="bold">{product.title}</div>
-              <div>{product.description}</div>
-            </div>
-            <button
-              className="delete-button bold"
+        {productsWithPaginations.map((product: Product) => {
+          return (
+            <li
+              key={product.id}
               onClick={() => {
-                store.removeProduct(product.id);
+                store.setSelectedProduct(product.id);
+              }}
+              className="li-container"
+              style={{
+                backgroundColor:
+                  store.productToDisplay?.id == product.id
+                    ? "skyblue"
+                    : "white",
               }}
             >
-              delete
-            </button>
-          </li>
-        ))}
+              <div className="image-li-contianer">
+                <img
+                  src={product.thumbnail}
+                  alt="image"
+                  className="product-image"
+                />
+              </div>
+              <div className="title-and-description">
+                <div className="bold">{product.title}</div>
+                <div>{product.description}</div>
+              </div>
+              <button
+                className="delete-button bold"
+                onClick={() => {
+                  store.removeProduct(product.id);
+                }}
+              >
+                delete
+              </button>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );

@@ -9,6 +9,9 @@ function App() {
   useEffect(() => {
     store.loadProducts();
   });
+  const changePagination = (direction: string) => {
+    store.changePaginationStartPoint(direction);
+  };
   return (
     <div className="body-container">
       <header className="header">My Store</header>
@@ -22,7 +25,23 @@ function App() {
               <ProductDetailsObserver />
             </div>
           </div>
-          <div>pagination later-on be here</div>
+          <div>
+            <button
+              onClick={() => {
+                changePagination("backward");
+              }}
+            >
+              prev page
+            </button>
+            {/* <div>{`${startNumber} of ${endNumber}`}</div> */}
+            <button
+              onClick={() => {
+                changePagination("forward");
+              }}
+            >
+              next page
+            </button>
+          </div>
         </div>
       ) : (
         <div>LOADING PRODUCTS...</div>

@@ -40,6 +40,9 @@ const ProductDetails = () => {
       case "price":
         setProductPrice(value);
         break;
+      case "description":
+        setProductDescription(value);
+        break;
     }
   };
 
@@ -114,7 +117,6 @@ const ProductDetails = () => {
                   name="description"
                   className="product-input"
                   rows={4}
-                  maxLength={4}
                 />
               </div>
               <div className="input-label-container">
