@@ -41,6 +41,9 @@ function App() {
             </div>
           </div>
           <div></div>
+          <button className="round-button" onClick={() => store.DeleteAll()}>
+            Reset
+          </button>
         </div>
       ) : (
         <div className="main-container">

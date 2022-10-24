@@ -97,6 +97,20 @@ class Store {
     this.makingRequestStatus(false);
   };
 
+  DeleteAll = async () => {
+    this.makingRequestStatus(true);
+    axios.delete(`${this.baseUrl}/deleteAll`).then(
+      (res) => {
+        console.log(res);
+        this.loadData();
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+    this.makingRequestStatus(false);
+  };
+
   PutToServer = async (
     // route, obj, response
     url: string,

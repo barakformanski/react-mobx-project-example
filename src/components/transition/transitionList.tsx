@@ -12,38 +12,53 @@ const TransitionList = () => {
   const selectFromRef = useRef<HTMLSelectElement>(null);
   const selectToRef = useRef<HTMLSelectElement>(null);
 
-  useEffect(() => {
-    console.log(
-      "selectNameRef",
-      selectNameRef.current?.value,
-      "selectFromRef",
-      selectFromRef.current?.value,
-      "selectToRef",
-      selectToRef.current?.value
-    );
-  });
+  // useEffect(() => {
+  //   console.log(
+  //     "selectNameRef",
+  //     selectNameRef.current?.value,
+  //     "selectFromRef",
+  //     selectFromRef.current?.value,
+  //     "selectToRef",
+  //     selectToRef.current?.value
+  //   );
+  // });
   let optionsArray: string[] = store.statuses.map(
     (status: Status) => status.title
   );
 
   const transitions = store.transitions;
-  const [radioValue, setRadioValue] = useState("");
-  let validationInputs = {
-    name: selectNameRef.current?.value,
-    from: selectFromRef.current?.value,
-    to: selectToRef.current?.value,
-  };
+
+  // let validationInputs = {
+  //   name: selectNameRef.current?.value,
+  //   from: selectFromRef.current?.value,
+  //   to: selectToRef.current?.value,
+  // };
   const checkValidation = () => {
+    console.log(
+      "selectNameRef",
+      selectNameRef.current?.value.length === 0,
+      "selectFromRef",
+      selectFromRef.current?.value,
+      "selectToRef",
+      selectToRef.current?.value
+    );
     if (
       selectNameRef.current?.value.length === 0 ||
       selectFromRef.current?.value.length === 0 ||
       selectToRef.current?.value.length === 0
     ) {
+      console.log("SHOULD RETURN TRUE");
+      setValidation(true);
       return true;
     } else {
+      console.log("SHOULD RETURN FALSE");
+      setValidation(false);
+
       return false;
     }
   };
+
+  const [validation, setValidation] = useState(false);
 
   const handleChange = () => {
     checkValidation();
@@ -83,14 +98,14 @@ const TransitionList = () => {
             />
           </label>
           <label>from:</label>
-          <select name="fromSelect" ref={selectFromRef}>
+          <select name="fromSelect" ref={selectFromRef} onChange={handleChange}>
             {optionsArray &&
               optionsArray.map((opt) => {
                 return <option value={opt}>{opt}</option>;
               })}
           </select>
           <label>to:</label>
-          <select name="toSelect" ref={selectToRef}>
+          <select name="toSelect" ref={selectToRef} onChange={handleChange}>
             {optionsArray &&
               optionsArray.map((opt) => {
                 return <option value={opt}>{opt}</option>;
@@ -100,7 +115,7 @@ const TransitionList = () => {
             type="submit"
             value="Add"
             className="add-button"
-            // disabled={checkValidation()}
+            disabled={validation}
           />
         </form>
         <BallTriangle
