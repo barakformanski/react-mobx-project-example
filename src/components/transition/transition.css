@@ -1,0 +1,79 @@
+.list-container{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    /* position: relative; */
+    /* overflow: hidden; */
+}
+
+.ul-container{
+  height: 90%;
+    list-style: disc;
+    margin: 0;
+    /* padding: 0; */
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.ul-container::-webkit-scrollbar {
+    display: none;
+    
+  }
+
+.li-container{
+    width: 100%;
+    
+
+
+    /* box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border: 2px black solid ;
+    height: 23%;
+    max-height: 23%;
+    display: flex;
+    align-items: center;
+    padding-left: 2%;
+    padding-right: 1%;
+    justify-content: space-between; */
+}
+
+
+
+.product-image{
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.delete-button{
+    background-color: orange;
+    box-shadow: 2.5px 2.5px;
+    align-self: flex-end;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+
+
+
+
+
+
+.control-buttons-container{
+    display: flex;
+    flex-direction: row;
+justify-content: space-between;
+height: 10%;
+align-items: center;
+}
+.add-button{
+    background-color: lightgreen;
+    box-shadow: 2.5px 2.5px;
+    /* margin-bottom: 1%; */
+}
+* {
+    box-sizing: border-box;
+  }
+  

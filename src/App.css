@@ -1,10 +1,10 @@
 .body-container {
   height: 100vh;
   border: 1vh black solid;
-  box-sizing: border-box;
+   box-sizing: border-box;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
-  width: 100vw;
+  /* width: 100vw; */
 }
 
   
@@ -13,11 +13,11 @@
     background-color: skyblue;
     font-size: 30px;
     color: black;
-    width: 100%;
+    /* width: 100%; */
     display: flex;
     align-items: center;
     padding-left: 3%;
-    padding-right: 3%;
+    /* padding-right: 3%; */
     font-weight: bolder;
     border-bottom: 0.5vh black solid;
   box-sizing: border-box;
@@ -34,36 +34,29 @@
   .content-container{
     display: flex;
     flex-direction: row;
-    width: 100%;
+    /* width: 100%; */
     height: 88%;
     justify-content: space-between;
   }
   
   
-  .products-column{
-    width: 49%;
+  .statuses-column{
+    width: 32%;
     height: 100%;
     display: flex;
     flex-direction: column;   
+    justify-content: center;
   }
  
-  .product-details-column{
-    width: 49%;
+  .transitions-column{
+    width: 65%;
     height: 100%;
     display: flex;
-    align-items: flex-end;
+    justify-content: center;
    
   }
 
-  .footer{
-    height: 5%;
-    background-color:#E6E6FA;
-    border-top: 0.5vh black solid;
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-
-  }
+ 
   
  .bold{
   font-weight: bold;

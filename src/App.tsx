@@ -1,52 +1,60 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
-import ProductsListObserver from "./components/productsList/ProductsList";
-import ProductDetailsObserver from "./productsDetails/ProductsDetails";
+import StatusesListObserver from "./components/statusesList/StatusesList";
+import TransitionObserver from "./components/transition/transitionList";
 import store from "./store";
 import { observer } from "mobx-react";
+import { BallTriangle } from "react-loader-spinner";
+import useLocalStorage from "./useLocalStorage.js";
+import Button from "./assets/button/Button";
 
 function App() {
-  useEffect(() => {
-    store.loadProducts();
-  });
-  const changePagination = (direction: string) => {
-    store.changePaginationStartPoint(direction);
+  const [tempName, setTempName] = useState("");
+  const [name, setName] = useLocalStorage("name", "");
+  const [edit, setEdit] = useState(false);
+  const handleChange = (e: any) => {
+    setTempName(e.target.value);
   };
+  const handleSubmit = (e: any) => {
+    setName(tempName);
+    setEdit(false);
+    e.preventDefault();
+  };
+
+  useEffect(() => {
+    store.loadData();
+  });
+  // const changePagination = (direction: string) => {
+  //   store.changePaginationStartPoint(direction);
+  // };
   return (
     <div className="body-container">
-      <header className="header">My Store</header>
-      {store.finishLoadingProducts ? (
+      <h1 className="header">build a work flow</h1>
+      {store.finishLoadingData ? (
         <div className="main-container">
           <div className="content-container">
-            <div className="products-column">
-              <ProductsListObserver />
+            <div className="statuses-column">
+              <StatusesListObserver />
             </div>
-            <div className="product-details-column">
-              <ProductDetailsObserver />
+            <div className="transitions-column">
+              <TransitionObserver />
             </div>
           </div>
-          <div>
-            <button
-              onClick={() => {
-                changePagination("backward");
-              }}
-            >
-              prev page
-            </button>
-            {/* <div>{`${startNumber} of ${endNumber}`}</div> */}
-            <button
-              onClick={() => {
-                changePagination("forward");
-              }}
-            >
-              next page
-            </button>
-          </div>
+          <div></div>
         </div>
       ) : (
-        <div>LOADING PRODUCTS...</div>
+        <div className="main-container">
+          <div>LOADING DATA...</div>
+          <BallTriangle
+            height={100}
+            width={100}
+            radius={5}
+            color="#4fa94d"
+            ariaLabel="ball-triangle-loading"
+            visible={true}
+          />
+        </div>
       )}
-      <footer className="footer">footer</footer>
     </div>
   );
 }

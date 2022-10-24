@@ -1,93 +1,131 @@
-import { makeAutoObservable, toJS,computed } from "mobx";
-import Product from "./interface"
+import { makeAutoObservable } from "mobx";
+import { Status, Transition } from "./interface";
+import axios from "axios";
 
-class Store{
-    products: Product[] =[];
-    finishLoadingProducts:boolean = false;
-    selectedProduct: Product|undefined=undefined;
-    paginationStartPoint:number=0;
-constructor(){
-    makeAutoObservable(this)
-}
+class Store {
+  baseUrl = "http://localhost:4001/crud/";
+  transitions: Transition[] = [];
+  statuses: Status[] = [];
+  // filteredProducts: Product[] | undefined = [];
+  finishLoadingData: boolean = false;
+  // selectedProduct: Product | undefined = undefined;
+  selectedStatus: Status | undefined = undefined;
+  paginationStartPoint: number = 0;
+  makingRequset: boolean = false;
+  constructor() {
+    makeAutoObservable(this);
+  }
+  makingRequestStatus(reqStatus: boolean) {
+    this.makingRequset = reqStatus;
+  }
+  // async loadProducts() {
+  //   const products = await fetch("http://localhost:4001/crud/getAll").then(
+  //     (res) => res.json()
+  //   );
 
-async loadProducts(){
-    const products =await fetch('https://dummyjson.com/products')
-.then(res => res.json())
-this.products = products.products
-this.finishLoadingProducts=true
-}
+  //   // to load the data from the api instead from the local server
+  //   // const products = await fetch("https://dummyjson.com/products").then((res) =>
+  //   //   res.json()
+  //   // );
+  //   // localStorage.setItem("products", JSON.stringify(products.products));
+  //   // this.products = products.products;
 
-addProduct(){
-    this.selectedProduct = {
-            title:`product ${this.products.length+1}`,
-            id:this.products.length+1,
-            description: "",
-            price: undefined,
-            thumbnail: "",
+  //   localStorage.setItem("products", JSON.stringify(products));
+  //   this.products = products;
+  //   this.finishLoadingProducts = true;
+  // }
+  async loadData() {
+    console.log("LOADING");
 
+    const statuses = await fetch(`${this.baseUrl}getAllStatuses`).then((res) =>
+      res.json()
+    );
+    this.statuses = statuses;
+    const transitions = await fetch(`${this.baseUrl}getAllTransitions`).then(
+      (res) => res.json()
+    );
+    this.transitions = transitions;
+    this.finishLoadingData = true;
+  }
+
+  PostToServer = async (
+    url: string,
+    obj: object,
+    setData: any,
+    SetResponse: any
+  ) => {
+    console.log(url, obj);
+    axios.post(url, obj).then(
+      (res) => {
+        if (setData) {
+          setData(res.data);
         }
-        this.products.unshift(this.selectedProduct)
-        this.paginationStartPoint=0
-}
-saveProduct(savedProduct:Product){
-const productPosition= this.products.findIndex(product=>product.id === savedProduct.id)
-this.products[productPosition]=
-    {...this.products[productPosition],
-            title:savedProduct.title,
-            id:savedProduct.id,
-            description:savedProduct.description,
-            price:savedProduct.price,
+        if (SetResponse) {
+          SetResponse(res);
         }
-}
+        this.loadData();
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+    this.makingRequestStatus(false);
+  };
 
-removeProduct(id:number){
-    this.selectedProduct=undefined;
-    this.products=this.products.filter(product=>product.id != id)
-};
+  DeleteToServer = async (_id: string) => {
+    axios.delete(`${this.baseUrl}/delete/${_id}`).then(
+      (res) => {
+        console.log(res);
+        this.loadData();
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+    this.makingRequestStatus(false);
+  };
+  deletetransition = async (_id: string) => {
+    axios.delete(`${this.baseUrl}/deletetransition/${_id}`).then(
+      (res) => {
+        console.log(res);
+        this.loadData();
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+    this.makingRequestStatus(false);
+  };
 
-
-setSelectedProduct(id:number){
-    this.selectedProduct=this.products.find(product=>product.id==id)
-}
-
-changePaginationStartPoint(direction:string){
-    const startPoint:number=this.paginationStartPoint;
-let newStartPoint=0;
-    if(direction=="forward"){
-        newStartPoint=startPoint+4
-        if(newStartPoint+4>this.products.length){
-            newStartPoint=this.products.length-4
+  PutToServer = async (
+    // route, obj, response
+    url: string,
+    obj: object,
+    setData: any,
+    SetResponse: any
+  ) => {
+    this.makingRequestStatus(true);
+    axios.patch(url, obj).then(
+      (res) => {
+        console.log(res);
+        if (SetResponse) {
+          SetResponse(res);
         }
-        else{     
-            console.log(
-             "startPoint",startPoint)
-            console.log("this.products.length",this.products.length);
-                   
-        newStartPoint=startPoint+4;
-}    }
-if(direction=="backward"){
-if(startPoint-4<0)
-{newStartPoint=0}
-else{
-    newStartPoint=startPoint-4}
+        this.loadData();
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+    this.makingRequestStatus(false);
+  };
+
+  // setSelectedProduct(id: number | undefined) {
+  //   console.log(id);
+
+  //   // this.selectedProduct = this.products.find((product) => product.id === id);
+  // }
 }
-console.log(newStartPoint);
-
-this.paginationStartPoint=newStartPoint;
-this.setSelectedProduct(this.products[newStartPoint].id)
-}
-
-get productToDisplay (){
-    if(this.selectedProduct)
-    return this.selectedProduct
-    else if(this.products.length)
-    return this.products[0]
-    else return undefined
-}
-}
-
-
-
 
 const store = new Store();
 export default store;

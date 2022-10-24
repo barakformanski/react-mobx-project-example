@@ -1,18 +1,16 @@
-.product-list-container{
+.list-container{
     height: 100%;
     display: flex;
     flex-direction: column;
-    position: relative;
-    overflow: hidden;
+    /* position: relative; */
+    /* overflow: hidden; */
 }
 
 .ul-container{
   height: 90%;
-    list-style: outside none none;
-    padding: 0;
+    list-style: disc;
     margin: 0;
-    /* position: absolute; */
-    /* top:5%; */
+    /* padding: 0; */
     overflow: auto;
     display: flex;
     flex-direction: column;
@@ -25,41 +23,36 @@
   }
 
 .li-container{
-    box-sizing: border-box;
+    width: 100%;
+    
+
+
+    /* box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     border: 2px black solid ;
-    /* margin: 0.5% 0 0.5% 0; */
-    min-height: 23%;
+    height: 23%;
     max-height: 23%;
     display: flex;
     align-items: center;
     padding-left: 2%;
     padding-right: 1%;
-    justify-content: space-between;
+    justify-content: space-between; */
 }
 
-.image-li-contianer{
-    height: 80%;
-    width: 15%;
-    margin-right: 2%;
-    text-align: center;
 
-}
 
 .product-image{
     max-width: 100%;
     max-height: 100%;
 }
-.title-and-description{
-    width: 65%;
-}
+
 .delete-button{
-    width: 15%;
     background-color: orange;
     box-shadow: 2.5px 2.5px;
     align-self: flex-end;
-    margin-bottom: 1%;
+    margin-left: 2%;
+    margin-right: 2%;
 }
 
 
@@ -76,7 +69,6 @@ height: 10%;
 align-items: center;
 }
 .add-button{
-    width: 10%;
     background-color: lightgreen;
     box-shadow: 2.5px 2.5px;
     /* margin-bottom: 1%; */
