@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import { Status } from "../../interface";
-import "./StatusesList.css";
+import "../List.css";
 import store from "../../store";
 import { observer } from "mobx-react";
 import { useState } from "react";

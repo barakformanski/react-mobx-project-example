@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import "./App.css";
 import StatusesListObserver from "./components/statusesList/StatusesList";
-import TransitionObserver from "./components/transition/transitionList";
+import TransitionObserver from "./components/transitionList/transitionList";
 import store from "./store";
 import { observer } from "mobx-react";
 import { BallTriangle } from "react-loader-spinner";

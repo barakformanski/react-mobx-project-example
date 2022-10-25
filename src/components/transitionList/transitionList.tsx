@@ -1,11 +1,10 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Status, Transition } from "../../interface";
-import "./transition.css";
+import "../List.css";
 import store from "../../store";
 import { observer } from "mobx-react";
 import { BallTriangle } from "react-loader-spinner";
-// import { DeleteToServer, PostToServer } from "../../axiosService";
 
 const TransitionList = () => {
   const selectNameRef = useRef<HTMLInputElement>(null);
