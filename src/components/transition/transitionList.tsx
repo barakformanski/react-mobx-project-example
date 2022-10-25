@@ -12,36 +12,13 @@ const TransitionList = () => {
   const selectFromRef = useRef<HTMLSelectElement>(null);
   const selectToRef = useRef<HTMLSelectElement>(null);
 
-  // useEffect(() => {
-  //   console.log(
-  //     "selectNameRef",
-  //     selectNameRef.current?.value,
-  //     "selectFromRef",
-  //     selectFromRef.current?.value,
-  //     "selectToRef",
-  //     selectToRef.current?.value
-  //   );
-  // });
   let optionsArray: string[] = store.statuses.map(
     (status: Status) => status.title
   );
 
   const transitions = store.transitions;
 
-  // let validationInputs = {
-  //   name: selectNameRef.current?.value,
-  //   from: selectFromRef.current?.value,
-  //   to: selectToRef.current?.value,
-  // };
   const checkValidation = () => {
-    console.log(
-      "selectNameRef",
-      selectNameRef.current?.value.length === 0,
-      "selectFromRef",
-      selectFromRef.current?.value,
-      "selectToRef",
-      selectToRef.current?.value
-    );
     if (
       selectNameRef.current?.value.length === 0 ||
       selectFromRef.current?.value.length === 0 ||
@@ -64,8 +41,6 @@ const TransitionList = () => {
     checkValidation();
   };
   const handleSubmit = (e: any) => {
-    console.log("e.target", e.target.fromSelect.value);
-
     store.makingRequestStatus(true);
     e.preventDefault();
     store.PostToServer(

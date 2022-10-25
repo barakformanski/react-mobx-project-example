@@ -6,11 +6,8 @@ class Store {
   baseUrl = "http://localhost:4001/crud/";
   transitions: Transition[] = [];
   statuses: Status[] = [];
-  // filteredProducts: Product[] | undefined = [];
   finishLoadingData: boolean = false;
-  // selectedProduct: Product | undefined = undefined;
   selectedStatus: Status | undefined = undefined;
-  paginationStartPoint: number = 0;
   makingRequset: boolean = false;
   constructor() {
     makeAutoObservable(this);
@@ -18,22 +15,7 @@ class Store {
   makingRequestStatus(reqStatus: boolean) {
     this.makingRequset = reqStatus;
   }
-  // async loadProducts() {
-  //   const products = await fetch("http://localhost:4001/crud/getAll").then(
-  //     (res) => res.json()
-  //   );
 
-  //   // to load the data from the api instead from the local server
-  //   // const products = await fetch("https://dummyjson.com/products").then((res) =>
-  //   //   res.json()
-  //   // );
-  //   // localStorage.setItem("products", JSON.stringify(products.products));
-  //   // this.products = products.products;
-
-  //   localStorage.setItem("products", JSON.stringify(products));
-  //   this.products = products;
-  //   this.finishLoadingProducts = true;
-  // }
   async loadData() {
     console.log("LOADING");
 
@@ -112,7 +94,6 @@ class Store {
   };
 
   PutToServer = async (
-    // route, obj, response
     url: string,
     obj: object,
     setData: any,
@@ -133,12 +114,6 @@ class Store {
     );
     this.makingRequestStatus(false);
   };
-
-  // setSelectedProduct(id: number | undefined) {
-  //   console.log(id);
-
-  //   // this.selectedProduct = this.products.find((product) => product.id === id);
-  // }
 }
 
 const store = new Store();

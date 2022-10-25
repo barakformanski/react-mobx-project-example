@@ -3,7 +3,7 @@ import { Status } from "../../interface";
 import "./StatusesList.css";
 import store from "../../store";
 import { observer } from "mobx-react";
-import { FormEvent, useEffect, useState } from "react";
+import { useState } from "react";
 import { BallTriangle } from "react-loader-spinner";
 
 const StatusesList = () => {

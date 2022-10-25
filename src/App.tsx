@@ -1,32 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import "./App.css";
 import StatusesListObserver from "./components/statusesList/StatusesList";
 import TransitionObserver from "./components/transition/transitionList";
 import store from "./store";
 import { observer } from "mobx-react";
 import { BallTriangle } from "react-loader-spinner";
-import useLocalStorage from "./useLocalStorage.js";
-import Button from "./assets/button/Button";
 
 function App() {
-  const [tempName, setTempName] = useState("");
-  const [name, setName] = useLocalStorage("name", "");
-  const [edit, setEdit] = useState(false);
-  const handleChange = (e: any) => {
-    setTempName(e.target.value);
-  };
-  const handleSubmit = (e: any) => {
-    setName(tempName);
-    setEdit(false);
-    e.preventDefault();
-  };
-
   useEffect(() => {
     store.loadData();
   });
-  // const changePagination = (direction: string) => {
-  //   store.changePaginationStartPoint(direction);
-  // };
+
   return (
     <div className="body-container">
       <h1 className="header">build a work flow</h1>
