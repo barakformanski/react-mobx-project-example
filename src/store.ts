@@ -7,7 +7,6 @@ class Store {
   transitions: Transition[] = [];
   statuses: Status[] = [];
   finishLoadingData: boolean = false;
-  selectedStatus: Status | undefined = undefined;
   makingRequset: boolean = false;
   constructor() {
     makeAutoObservable(this);
@@ -17,7 +16,7 @@ class Store {
   }
 
   async loadData() {
-    console.log("LOADING");
+    console.log("LOADING DATA");
 
     const statuses = await fetch(`${this.baseUrl}getAllStatuses`).then((res) =>
       res.json()

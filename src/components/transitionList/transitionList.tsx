@@ -1,12 +1,13 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
-import { useRef, useState } from "react";
+import { FC, ReactElement, useEffect, useRef, useState } from "react";
 import { Status, Transition } from "../../interface";
 import "../List.css";
 import store from "../../store";
 import { observer } from "mobx-react";
 import { BallTriangle } from "react-loader-spinner";
+import { toJS } from "mobx";
 
-const TransitionList = () => {
+const TransitionList: FC = (): ReactElement => {
   const selectNameRef = useRef<HTMLInputElement>(null);
   const selectFromRef = useRef<HTMLSelectElement>(null);
   const selectToRef = useRef<HTMLSelectElement>(null);
@@ -40,6 +41,8 @@ const TransitionList = () => {
     checkValidation();
   };
   const handleSubmit = (e: any) => {
+    console.log(e.target);
+
     store.makingRequestStatus(true);
     e.preventDefault();
     store.PostToServer(
@@ -53,6 +56,9 @@ const TransitionList = () => {
       null
     );
   };
+  useEffect(() => {
+    console.log(toJS(transitions));
+  });
   return (
     <div className="list-container">
       <h2>Add transition</h2>
@@ -101,15 +107,16 @@ const TransitionList = () => {
           visible={store.makingRequset}
         />
       </div>
+
       <ul className="ul-container">
         {transitions.length ? (
           transitions.map((transition: Transition) => {
             return (
               <li key={transition._id} className="li-container">
                 <span>{transition.title} : </span>
-                <span>{transition.from}</span>
+                <span>{transition.from?.title}</span>
                 {"\u{02192}"}
-                <span>{transition.to}</span>
+                <span>{transition.to?.title}</span>
 
                 <button
                   className="delete-button bold"

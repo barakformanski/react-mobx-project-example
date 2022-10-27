@@ -24,10 +24,6 @@ function App() {
               <TransitionObserver />
             </div>
           </div>
-          <div></div>
-          <button className="round-button" onClick={() => store.DeleteAll()}>
-            Reset
-          </button>
         </div>
       ) : (
         <div className="main-container">
@@ -41,6 +37,11 @@ function App() {
             visible={true}
           />
         </div>
+      )}
+      {store.finishLoadingData && (
+        <button className="round-button" onClick={() => store.DeleteAll()}>
+          Reset
+        </button>
       )}
     </div>
   );

@@ -1,12 +1,12 @@
 export interface Status {
   title: string;
-  description: string | undefined;
-  _id?: any;
+  initial: boolean;
+  _id: string;
 }
 
 export interface Transition {
   title: string;
-  from: string | undefined;
-  to: string | undefined;
-  _id?: any;
+  from: { _id: string; title: string; initial: boolean };
+  to: { _id: string; title: string };
+  _id: string;
 }

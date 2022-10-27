@@ -13,7 +13,7 @@ const StatusesList = () => {
     setRadioValue(e.target.value);
     await store.PutToServer(
       `${store.baseUrl}update/${_id}`,
-      { description: "INIT" },
+      { initial: true },
       null,
       null
     );
@@ -72,7 +72,7 @@ const StatusesList = () => {
                 >
                   delete
                 </button>
-                <span> {status.description}</span>
+                {status.initial && <span>INIT</span>}
               </li>
             );
           })
